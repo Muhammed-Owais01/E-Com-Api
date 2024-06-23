@@ -1,11 +1,13 @@
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
-    'database', 
-    'username', 
-    'password', 
+    process.env.SEQUELIZE_DATABASE, 
+    process.env.SEQUELIZE_USERNAME, 
+    process.env.SEQUELIZE_PASSWORD, 
     {
-        host: 'localhost',
-        dialect: /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */''
+        host: process.env.SEQUELIZE_HOST,
+        dialect: process.env.SEQUELIZE_DIALECT
     }
 );
+
+module.exports = sequelize;
