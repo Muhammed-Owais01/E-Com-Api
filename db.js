@@ -6,7 +6,8 @@ const sequelize = new Sequelize(
     process.env.SEQUELIZE_PASSWORD, 
     {
         host: process.env.SEQUELIZE_HOST,
-        dialect: process.env.SEQUELIZE_DIALECT
+        dialect: process.env.SEQUELIZE_DIALECT,
+        logging: false
     }
 );
 

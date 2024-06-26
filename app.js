@@ -2,6 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const routes = require('./setup-routes');
 
 app.use(morgan('dev'));
 
@@ -10,6 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cors());
 
+routes(app);
 
 app.use((req, res, next) => {
     const error = new Error('Not found');
