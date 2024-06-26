@@ -1,9 +1,17 @@
 const Item = require('../models/item');
+const User = require('../models/user');
 
-exports.getById = async (itemId) =>
-    await Item.findByPk(itemId, {
-        include: 'creator'
+exports.getById = async (itemId) => {
+    return await Item.findByPk(itemId, {
+        attributes: {
+            exclude: ['userId']
+        },
+        include: {
+            association: 'creator',
+            attributes: ['id', 'username']
+        }
     });
+};
 
 exports.getAll = async (options) => 
     await Item.findAll(options);

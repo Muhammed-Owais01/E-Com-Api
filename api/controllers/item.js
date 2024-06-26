@@ -42,7 +42,7 @@ exports.update_item = asyncHandler(async (req, res, next) => {
 })
 
 exports.delete_item = asyncHandler(async (req, res, next) => {
-    const deletedItem = await ItemService.deleteItem({ itemId: req.params.itemId });
+    const deletedItem = await ItemService.deleteItem(req.params.itemId);
 
     return res.status(200).json({ message: "Item deleted" });
 })

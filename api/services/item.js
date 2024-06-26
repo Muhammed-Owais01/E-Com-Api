@@ -35,16 +35,15 @@ exports.createItem = async (item) => {
     })
 }
 
-exports.updateItem = async (newItem, userData) => {
+exports.updateItem = async (newItem, username) => {
     const item = await ItemDAO.getById(newItem.id);
-    console.log("Username by item: " + item.creator.username);
-    console.log("Username by userData: " + userData.username);
-    if (item.creator.username !== userData.username) throw {
+    
+    if (item.creator.username !== username) throw {
         status: 403,
         message: "You cannot change this post"
     }
 
-    await ItemDAO.update(...item);
+    await ItemDAO.update(newItem);
 }
 
 exports.deleteItem = async (itemId) => {
