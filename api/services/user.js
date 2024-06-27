@@ -51,5 +51,13 @@ exports.loginUser = async ({ username, password }) => {
     return token;
 }
 
+exports.updateUser = async (user) => {
+    if (user.password) {
+        const hash = await bcrypt.hash(user.password, 10);
+        user.password = hash;
+    }
+    await UserDAO.update(user);
+}
+
 exports.deleteUser = async (userId) => 
     await UserDAO.delete(userId);

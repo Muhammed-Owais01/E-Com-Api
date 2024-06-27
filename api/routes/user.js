@@ -8,6 +8,8 @@ router.post('/signup', UserController.user_signup);
 
 router.post('/login', UserController.user_login);
 
+router.patch('/:userId', checkAuth, UserController.update_user);
+
 router.delete('/', checkAuth, UserController.delete_user);
 
 module.exports = router;

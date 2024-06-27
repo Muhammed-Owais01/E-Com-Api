@@ -16,11 +16,17 @@ exports.user_login = asyncHandler(async (req, res, next) => {
         username: req.body.username,
         password: req.body.password
     });
-    
+
     return res.status(200).json({
         message: "User logged in",
         token: `Bearer ${token}`
     })
+})
+
+exports.update_user = asyncHandler(async (req, res, next) => {
+    const updatedUser = await UserService.updateUser({ id: req.params.userId, ...req.body});
+
+    return res.status(200).json({ message: "User Updated" });
 })
 
 exports.delete_user = asyncHandler(async (req, res, next) => {

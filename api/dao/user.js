@@ -10,5 +10,8 @@ exports.create = async (user) => {
     })
 };
 
+exports.update = async (user) => 
+    await User.update(user, { where: { id: user.id } });
+
 exports.delete = async (userId) =>
     await User.destroy({ where: { id: userId }});
