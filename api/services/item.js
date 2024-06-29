@@ -1,5 +1,8 @@
 const ItemDAO = require('../dao/item');
 const parseQuery = require('../utils/parseQuery');
+const path = require('path');
+const fs = require('fs');
+const deleteFile = require('../utils/deleteFile');
 
 exports.getItemById = async (itemId) => {
     const item = await ItemDAO.getById(itemId);
@@ -26,16 +29,28 @@ exports.getAllItems = async (limit, page) => {
     }
 }
 
-exports.createItem = async (item) => {
+exports.getImageById = async (itemId) => {
+    const item = await this.getItemById(itemId);
+
+    const filePath = path.join(__dirname, '../../uploads', item.itemImage);
+    if (!fs.existsSync(filePath)) {
+        return res.status(500).json({ message: 'File not found after upload' });
+    }
+
+    return filePath;
+}
+
+exports.createItem = async (item, file) => {
     return await ItemDAO.create({
         itemname: item.itemname,
         price: item.price,
         description: item.description,
+        itemImage: file?.filename,
         userId: item.userId
     })
 }
 
-exports.updateItem = async (newItem, username) => {
+exports.updateItem = async (newItem, username, file) => {
     const item = await ItemDAO.getById(newItem.id);
     
     if (item.creator.username !== username) throw {
@@ -43,7 +58,10 @@ exports.updateItem = async (newItem, username) => {
         message: "You cannot change this post"
     }
 
-    await ItemDAO.update(newItem);
+    if (file)
+        deleteFile(item.itemImage);
+
+    await ItemDAO.update({ ...newItem, itemImage: file.filename });
 }
 
 exports.deleteItem = async (itemId) => {
@@ -53,6 +71,9 @@ exports.deleteItem = async (itemId) => {
         status: 404,
         message: "Item does not exist"
     }
+
+    if (item.itemImage)
+        deleteFile(item.itemImage);
 
     await ItemDAO.delete(itemId);
 }

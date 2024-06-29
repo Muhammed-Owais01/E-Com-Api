@@ -3,20 +3,22 @@ const asyncHandler = require('../utils/asyncHandler');
 
 exports.get_all_items = asyncHandler(async (req, res, next) => {
     const { count, items } = await CartService.getAllCartItems(req.userData.userId);
+    let total = 0;
 
     return res.status(200).json({
         count: count,
         cartId: items[0].cartId,
         items: items.map(item => {
+            total += item.quantity * item.item.price;
             return {
-                quantity: item.quantity,
                 id: item.item.id,
                 itemname: item.item.itemname,
                 price: item.item.price,
                 description: item.item.description,
                 quantity: item.quantity
             }
-        })
+        }),
+        total: total
     })
 })
 

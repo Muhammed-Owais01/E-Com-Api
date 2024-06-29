@@ -18,14 +18,9 @@ exports.getAll = async (options) =>
 
 exports.countAll = async (items) => await items.length;
 
-exports.create = async (item) => {
-    return await Item.create({
-        itemname: item.itemname,
-        price: item.price,
-        description: item.description,
-        userId: item.userId
-    })
-}
+exports.create = async (item) => 
+    await Item.create(item);
+
 
 exports.update = async (item) =>
     await Item.update(item,{ where: { id: item.id } });

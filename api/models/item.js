@@ -20,6 +20,10 @@ module.exports = sequelize.define('Item', {
             type: DataTypes.STRING,
             allowNull: false
         },
+        itemImage: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
         userId: {
             type: DataTypes.INTEGER,
             allowNull: false,
