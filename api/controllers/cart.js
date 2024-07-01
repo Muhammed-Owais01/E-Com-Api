@@ -7,7 +7,6 @@ exports.get_all_items = asyncHandler(async (req, res, next) => {
 
     return res.status(200).json({
         count: count,
-        cartId: items[0].cartId,
         items: items.map(item => {
             total += item.quantity * item.item.price;
             return {
@@ -15,6 +14,7 @@ exports.get_all_items = asyncHandler(async (req, res, next) => {
                 itemname: item.item.itemname,
                 price: item.item.price,
                 description: item.item.description,
+                itemImage: item.item.itemImage,
                 quantity: item.quantity
             }
         }),
@@ -23,7 +23,7 @@ exports.get_all_items = asyncHandler(async (req, res, next) => {
 })
 
 exports.add_to_cart = asyncHandler(async (req, res, next) => {
-    const item = await CartService.addItemToCart({ userId: req.userData.userId, itemId: req.params.itemId });
+    const item = await CartService.addItemToCart({ userId: req.userData.userId, itemId: req.params.itemId, quantity: req.body.quantity || 1 });
 
     return res.status(200).json({ message: "Added to cart", itemId: item.itemId });
 })

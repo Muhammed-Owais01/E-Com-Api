@@ -22,7 +22,8 @@ module.exports = sequelize.define('Item', {
         },
         itemImage: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
+            defaultValue: "no_image.png"
         },
         userId: {
             type: DataTypes.INTEGER,
