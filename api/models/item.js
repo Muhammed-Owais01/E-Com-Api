@@ -17,7 +17,7 @@ module.exports = sequelize.define('Item', {
             allowNull: false
         },
         description: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(1024),
             allowNull: false
         },
         itemImage: {
